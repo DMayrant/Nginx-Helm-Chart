@@ -1,0 +1,41 @@
+# Replica count
+# Image, both name and tag
+# Service type and port
+
+## @param replicaCount number of nginx replicas to deploy
+namespace: default 
+###  Deployment Name ###
+app: 
+  name: nginx-deploy
+  labels:
+    app: nginx-deploy
+
+##### Service Account Configuration #####
+serviceAccount: 
+  create: true
+  name: nginx-helm
+  token: false
+
+#### Deployment Configuration ####
+replicaCount: 3
+image:
+  name: nginx
+  tag: "1.28.0"
+containers:
+  name: nginx 
+containerPorts:
+  http: 80
+resources:
+  limits:
+    memory: 256Mi
+  requests:
+    cpu: 75m
+    memory: 128Mi
+
+##### Service Configuration ####
+service:
+  enabled: true
+  type: ClusterIP
+  port: 80
+  targetPort: 80
+
